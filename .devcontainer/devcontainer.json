@@ -1,0 +1,17 @@
+{
+  "name": "Dev Container with Continue AI",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // Menginstal ekstensi Continue secara otomatis saat Codespace dibuat
+        "Continue.continue"
+      ]
+    }
+  },
+  // Mengirimkan API Key dari GitHub Secrets ke Environment Variables di Codespace
+  "containerEnv": {
+    "OPENROUTER_API_KEY": "${localEnv:OPENROUTER_API_KEY}"
+  },
+  // Membuat/mengatur config.json Continue secara otomatis saat container selesai dibuat
+  "postCreateCommand": "mkdir -p ~/.continue && cat << 'EOF' > ~/.continue/config.json\n{\n  \"models\": [\n    {\n      \"title\": \"DeepSeek-R1 (Free - OpenRouter)\",\n      \"provider\": \"openrouter\",\n      \"model\": \"deepseek/deepseek-r1:free\",\n      \"apiKey\": \"'$OPENROUTER_API_KEY'\"\n    },\n    {\n      \"title\": \"Qwen 2.5 Coder (Free - OpenRouter)\",\n      \"provider\": \"openrouter\",\n      \"model\": \"qwen/qwen-2.5-coder-32b-instruct:free\",\n      \"apiKey\": \"'$OPENROUTER_API_KEY'\"\n    }\n  ],\n  \"tabAutocompleteModel\": {\n    \"title\": \"Qwen Coder Autocomplete\",\n    \"provider\": \"openrouter\",\n    \"model\": \"qwen/qwen-2.5-coder-32b-instruct:free\",\n    \"apiKey\": \"'$OPENROUTER_API_KEY'\"\n  }\n}\nEOF"
+}
